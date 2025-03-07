@@ -29,6 +29,12 @@
     $result = $_POST ? f3() : null;
 
     
-
+ //   if(empty($email) || empty($user) || empty($age)){
+                //       echo "Please fill all the fields";
+                //   }else{
+                //       echo "Email: $email <br>";
+                //       echo "User: $user <br>";
+                //       echo "Age: $age <br>";
+                //   }
 ?>
 
