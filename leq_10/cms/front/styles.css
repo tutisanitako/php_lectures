@@ -1,0 +1,57 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: antiquewhite;
+    margin: 0;
+    padding: 0;
+}
+
+header, main, footer{
+    width: 70%;
+    border: solid 1px gray;
+    min-height: 50px;
+    margin: 10px auto;
+}
+
+header{
+    height: 80px;
+    background-color: aqua;
+}
+
+main{
+    min-height: 500px;
+    background-color: white;
+    display: flex;
+}
+
+nav{
+    width: 25%;
+    background-color: aquamarine;
+}
+
+.content{
+    width: 75%;
+    background-color: beige;
+    margin-left: 5px;
+}
+
+footer{
+    background-color: aquamarine;
+}
+
+.datatable{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.datatable th, td{
+    border: solid 1px gray;
+    padding: 7px;
+    margin: auto;
+}
+
+form{
+    padding: 10px;
+}
