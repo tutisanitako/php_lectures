@@ -1,0 +1,386 @@
+
+/* Modern CSS variables for consistency */
+:root {
+    --primary-color: #6c5ce7; /* Purple */
+    --secondary-color: #a29bfe; /* Lighter Purple */
+    --accent-color: #fd79a8; /* Pink */
+    --dark-bg: #2d3436; /* Dark Grey */
+    --darker-bg: #1e2124; /* Even Darker Grey */
+    --text-white: #ffffff;
+    --text-gray: #b2bec3;
+    --card-bg: #36393f; /* Card Background */
+    --hover-bg: #40434a; /* Hover Background */
+    --error-red: #ff6b6b;
+    --success-green: #2ecc71;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top, not center vertically */
+    padding: 40px 20px; /* Add padding for spacing */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.container {
+    max-width: 900px; /* Slightly wider for better content flow */
+    width: 100%;
+    background-color: var(--card-bg);
+    padding: 40px; /* Increased padding */
+    border-radius: 15px; /* Softer corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* More prominent shadow */
+    position: relative; /* For back button positioning */
+}
+
+.home-link {
+    position: absolute; /* Position relative to container */
+    top: 20px;
+    left: 20px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: var(--darker-bg);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.home-link:hover {
+    color: var(--text-white);
+    background-color: var(--primary-color);
+    transform: translateX(-5px);
+    box-shadow: 0 2px 10px rgba(108, 92, 231, 0.4);
+}
+
+h1 {
+    font-size: 3rem; /* Larger title */
+    text-align: center;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-top: 20px; /* Space for the back button */
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin-top: 40px; /* More space above sections */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(162, 155, 254, 0.2); /* Faded border */
+    position: relative; /* For icon */
+    padding-left: 40px; /* Space for icon */
+}
+
+h2::before {
+    content: ''; /* Placeholder for icon */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    /* You can replace this with specific icon content later */
+}
+h2.profile::before { content: '👤'; }
+h2.history::before { content: '🎧'; }
+
+
+.section-content {
+    background-color: var(--darker-bg); /* Darker background for content blocks */
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(108, 92, 231, 0.2); /* Subtle border */
+}
+
+/* Profile Details */
+.profile-details p {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space out label and value */
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(178, 190, 195, 0.2); /* Lighter dashed border */
+    font-size: 1.1rem;
+    color: var(--text-gray);
+}
+
+.profile-details p:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.profile-details strong {
+    color: var(--text-white);
+    flex-shrink: 0; /* Prevent label from shrinking */
+    margin-right: 20px; /* Space between label and value */
+    min-width: 120px; /* Ensure consistent label width */
+}
+.profile-details span {
+    text-align: right; /* Align value to the right */
+    flex-grow: 1; /* Allow value to take remaining space */
+}
+
+/* Listening History */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: var(--card-bg); /* Consistent card background */
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    border-left: 5px solid var(--accent-color); /* Pink accent */
+    transition: all 0.3s ease;
+}
+
+li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3); /* Pink shadow on hover */
+    background-color: var(--hover-bg);
+}
+
+.song-info {
+    flex-grow: 1;
+    margin-right: 15px; /* Space between info and meta */
+    flex-basis: 60%; /* Take more space on larger screens */
+}
+
+.song-info strong {
+    color: var(--text-white);
+    font-size: 1.15rem; /* Slightly larger song name */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.song-info span {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.song-meta {
+    font-size: 0.85rem;
+    color: #7f8c8d; /* Grey text */
+    text-align: right;
+    flex-basis: 35%; /* Take less space */
+}
+
+.empty-message {
+    color: var(--text-gray);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+.empty-message a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+.empty-message a:hover {
+    text-decoration: underline;
+}
+
+/* Logout Button */
+.logout-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, var(--accent-color), #ffafbe); /* Pink gradient */
+    color: var(--text-white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px; /* More rounded */
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+}
+
+.logout-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+    opacity: 0.9;
+}
+
+.custom-modal {
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Blurred background */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center;
+    align-items: center;
+
+    /* Start hidden and transition visibility */
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transition both */
+}
+
+.custom-modal.show {
+    visibility: visible; /* Show when 'show' class is added */
+    opacity: 1; /* Fade in */
+}
+
+.custom-modal-content {
+    background-color: var(--card-bg);
+    margin: auto; /* For centering */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(-50px); /* Start slightly above for animation */
+    opacity: 0; /* Start hidden for animation */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    position: relative; /* For the close button */
+}
+
+.custom-modal.show .custom-modal-content {
+    transform: translateY(0); /* Slide down into place */
+    opacity: 1; /* Fade in */
+}
+
+.custom-modal-content h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.custom-modal-content p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+}
+
+.modal-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none; /* For the anchor tag if used */
+    display: inline-block; /* For consistent sizing */
+    text-align: center;
+}
+
+.modal-btn.confirm {
+    background: linear-gradient(45deg, var(--accent-color), #ffafbe); /* Pink gradient for confirm */
+    color: var(--text-white);
+    box-shadow: 0 4px 10px rgba(253, 121, 168, 0.4);
+}
+
+.modal-btn.confirm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(253, 121, 168, 0.6);
+}
+
+.modal-btn.cancel {
+    background-color: var(--darker-bg);
+    color: var(--text-gray);
+    border: 2px solid var(--primary-color);
+}
+
+.modal-btn.cancel:hover {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+}
+/* End Custom Confirmation Modal Styles */
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+    .container {
+        padding: 30px 20px;
+    }
+    .home-link {
+        top: 15px;
+        left: 15px;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-size: 2.5rem;
+        padding-top: 10px;
+    }
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 30px;
+        padding-left: 30px;
+    }
+    h2::before {
+        font-size: 1.2rem;
+    }
+    .profile-details p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .profile-details strong {
+        min-width: auto;
+        margin-right: 0;
+    }
+    .profile-details span {
+        text-align: left;
+    }
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .song-info, .song-meta {
+        flex-basis: 100%; /* Stack elements */
+        margin-right: 0;
+        text-align: left; /* Align text left when stacked */
+    }
+    .logout-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    .modal-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .modal-btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+}
