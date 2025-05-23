@@ -1,17 +1,15 @@
 <?php
 session_start();
 
-// Check if user is logged in and is an Admin (RoleID = 1)
 if (!isset($_SESSION['userID']) || $_SESSION['roleID'] != 1) {
     header("Location: ../index.php?error=access_denied");
     exit();
 }
 
-include '../db_connect.php'; // Connect to the database
-include '../log_page_view.php'; // Log this page view too!
-
+include '../db_connect.php';
+include '../log_page_view.php';
 $page_views = [];
-$sql_page_views = "SELECT ViewID, PageURL, VisitTime, VisitorIP FROM PageViews ORDER BY VisitTime DESC LIMIT 200"; // Get latest 200 views
+$sql_page_views = "SELECT ViewID, PageURL, VisitTime, VisitorIP FROM PageViews ORDER BY VisitTime DESC LIMIT 200";
 $result_page_views = $conn->query($sql_page_views);
 
 if ($result_page_views && $result_page_views->num_rows > 0) {
@@ -20,7 +18,7 @@ if ($result_page_views && $result_page_views->num_rows > 0) {
     }
 }
 
-$conn->close(); // Close the database connection
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">

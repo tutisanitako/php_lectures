@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 04:24 AM
+-- Generation Time: May 23, 2025 at 05:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,6 +92,40 @@ INSERT INTO `company` (`CompanyID`, `CompanyName`) VALUES
 (3, 'RCA Records'),
 (4, 'Roswell Records'),
 (5, 'Columbia Records');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `creatoralbums`
+--
+
+CREATE TABLE `creatoralbums` (
+  `CreatorAlbumID` int(11) NOT NULL,
+  `CreatorID` int(11) NOT NULL,
+  `CreatorAlbumName` varchar(255) NOT NULL,
+  `ReleaseYear` year(4) DEFAULT NULL,
+  `IsPublic` tinyint(1) DEFAULT 0,
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `creatorsongs`
+--
+
+CREATE TABLE `creatorsongs` (
+  `CreatorSongID` int(11) NOT NULL,
+  `CreatorAlbumID` int(11) NOT NULL,
+  `CreatorSongName` varchar(255) NOT NULL,
+  `ReleaseYear` year(4) DEFAULT NULL,
+  `FilePath` varchar(255) NOT NULL,
+  `Duration` int(11) DEFAULT NULL,
+  `IsPublic` tinyint(1) DEFAULT 0,
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -240,7 +274,57 @@ INSERT INTO `pageviews` (`ViewID`, `PageURL`, `VisitTime`, `VisitorIP`) VALUES
 (103, '/music-portal/index.php', '2025-05-23 06:22:13', '::1'),
 (104, '/music-portal/index.php', '2025-05-23 06:23:50', '::1'),
 (105, '/music-portal/index.php', '2025-05-23 06:23:55', '::1'),
-(106, '/music-portal/index.php', '2025-05-23 06:24:01', '::1');
+(106, '/music-portal/index.php', '2025-05-23 06:24:01', '::1'),
+(107, '/music-portal/index.php', '2025-05-23 06:25:02', '::1'),
+(108, '/music-portal/index.php', '2025-05-23 06:25:07', '::1'),
+(109, '/music-portal/index.php', '2025-05-23 06:25:18', '::1'),
+(110, '/music-portal/index.php', '2025-05-23 06:25:37', '::1'),
+(111, '/music-portal/admin/dashboard.php', '2025-05-23 06:25:43', '::1'),
+(112, '/music-portal/index.php?message=logged_out', '2025-05-23 06:25:48', '::1'),
+(113, '/music-portal/index.php', '2025-05-23 06:25:51', '::1'),
+(114, '/music-portal/listener/my_profile.php', '2025-05-23 06:25:54', '::1'),
+(115, '/music-portal/index.php?message=logged_out', '2025-05-23 06:25:56', '::1'),
+(116, '/music-portal/index.php?message=logged_out', '2025-05-23 06:27:25', '::1'),
+(117, '/music-portal/index.php', '2025-05-23 06:27:30', '::1'),
+(118, '/music-portal/index.php', '2025-05-23 06:27:36', '::1'),
+(119, '/music-portal/index.php', '2025-05-23 06:27:39', '::1'),
+(120, '/music-portal/index.php', '2025-05-23 06:28:08', '::1'),
+(121, '/music-portal/admin/dashboard.php', '2025-05-23 06:28:12', '::1'),
+(122, '/music-portal/index.php?message=logged_out', '2025-05-23 06:28:15', '::1'),
+(123, '/music-portal/index.php', '2025-05-23 06:28:20', '::1'),
+(124, '/music-portal/index.php', '2025-05-23 06:29:46', '::1'),
+(125, '/music-portal/index.php', '2025-05-23 06:29:51', '::1'),
+(126, '/music-portal/index.php', '2025-05-23 06:31:40', '::1'),
+(127, '/music-portal/artist/dashboard.php', '2025-05-23 06:31:49', '::1'),
+(128, '/music-portal/index.php', '2025-05-23 06:31:53', '::1'),
+(129, '/music-portal/index.php', '2025-05-23 06:31:53', '::1'),
+(130, '/music-portal/index.php', '2025-05-23 06:31:53', '::1'),
+(131, '/music-portal/index.php', '2025-05-23 06:31:53', '::1'),
+(132, '/music-portal/index.php', '2025-05-23 06:32:00', '::1'),
+(133, '/music-portal/index.php?message=logged_out', '2025-05-23 06:32:00', '::1'),
+(134, '/music-portal/admin/dashboard.php', '2025-05-23 06:32:01', '::1'),
+(135, '/music-portal/index.php?error=access_denied', '2025-05-23 06:32:01', '::1'),
+(136, '/music-portal/index.php?error=access_denied', '2025-05-23 06:32:05', '::1'),
+(137, '/music-portal/index.php?error=access_denied', '2025-05-23 06:32:45', '::1'),
+(138, '/music-portal/index.php', '2025-05-23 06:32:50', '::1'),
+(139, '/music-portal/index.php', '2025-05-23 06:34:00', '::1'),
+(140, '/music-portal/index.php', '2025-05-23 06:36:09', '::1'),
+(141, '/music-portal/artist_profile.php?artist_id=1', '2025-05-23 06:36:54', '::1'),
+(142, '/music-portal/index.php', '2025-05-23 06:36:58', '::1'),
+(143, '/music-portal/index.php', '2025-05-23 06:36:59', '::1'),
+(144, '/music-portal/index.php', '2025-05-23 06:39:42', '::1'),
+(145, '/music-portal/index.php', '2025-05-23 06:39:47', '::1'),
+(146, '/music-portal/index.php', '2025-05-23 06:39:51', '::1'),
+(147, '/music-portal/artist/dashboard.php', '2025-05-23 06:40:22', '::1'),
+(148, '/music-portal/index.php', '2025-05-23 06:48:57', '::1'),
+(149, '/music-portal/creator/dashboard.php', '2025-05-23 06:49:00', '::1'),
+(150, '/music-portal/index.php', '2025-05-23 06:49:00', '::1'),
+(151, '/music-portal/index.php', '2025-05-23 06:49:03', '::1'),
+(152, '/music-portal/index.php', '2025-05-23 06:52:28', '::1'),
+(153, '/music-portal/index.php', '2025-05-23 06:52:33', '::1'),
+(154, '/music-portal/creator/dashboard.php', '2025-05-23 06:53:24', '::1'),
+(155, '/music-portal/creator/dashboard.php', '2025-05-23 07:13:56', '::1'),
+(156, '/music-portal/creator/dashboard.php', '2025-05-23 07:16:05', '::1');
 
 -- --------------------------------------------------------
 
@@ -309,7 +393,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 (1, 'Admin'),
-(2, 'Artist'),
+(2, 'Creator'),
 (4, 'Guest'),
 (3, 'Listener');
 
@@ -405,6 +489,20 @@ ALTER TABLE `company`
   ADD PRIMARY KEY (`CompanyID`);
 
 --
+-- Indexes for table `creatoralbums`
+--
+ALTER TABLE `creatoralbums`
+  ADD PRIMARY KEY (`CreatorAlbumID`),
+  ADD KEY `idx_creator_albums_creatorid` (`CreatorID`);
+
+--
+-- Indexes for table `creatorsongs`
+--
+ALTER TABLE `creatorsongs`
+  ADD PRIMARY KEY (`CreatorSongID`),
+  ADD KEY `idx_creator_songs_albumid` (`CreatorAlbumID`);
+
+--
 -- Indexes for table `listeninghistory`
 --
 ALTER TABLE `listeninghistory`
@@ -479,6 +577,18 @@ ALTER TABLE `company`
   MODIFY `CompanyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `creatoralbums`
+--
+ALTER TABLE `creatoralbums`
+  MODIFY `CreatorAlbumID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `creatorsongs`
+--
+ALTER TABLE `creatorsongs`
+  MODIFY `CreatorSongID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `listeninghistory`
 --
 ALTER TABLE `listeninghistory`
@@ -488,7 +598,7 @@ ALTER TABLE `listeninghistory`
 -- AUTO_INCREMENT for table `pageviews`
 --
 ALTER TABLE `pageviews`
-  MODIFY `ViewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `ViewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT for table `playlists`
@@ -535,6 +645,18 @@ ALTER TABLE `albums`
 --
 ALTER TABLE `artists`
   ADD CONSTRAINT `artists_ibfk_1` FOREIGN KEY (`CompanyID`) REFERENCES `company` (`CompanyID`);
+
+--
+-- Constraints for table `creatoralbums`
+--
+ALTER TABLE `creatoralbums`
+  ADD CONSTRAINT `creatoralbums_ibfk_1` FOREIGN KEY (`CreatorID`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `creatorsongs`
+--
+ALTER TABLE `creatorsongs`
+  ADD CONSTRAINT `creatorsongs_ibfk_1` FOREIGN KEY (`CreatorAlbumID`) REFERENCES `creatoralbums` (`CreatorAlbumID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `listeninghistory`

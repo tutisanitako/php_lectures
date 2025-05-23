@@ -1,0 +1,600 @@
+/* General Body and Container Styles */
+body {
+    font-family: sans-serif;
+    background-color: #2d3436;
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    color: #6c5ce7;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background-color: #36393f;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #a29bfe;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #4a4d52;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #40434a;
+    color: #b2bec3;
+}
+
+tr:nth-child(even) {
+    background-color: #3e4146;
+}
+
+tr:hover {
+    background-color: #4a4d52;
+}
+
+/* Action Forms (for Edit/Delete buttons in tables) */
+.action-form {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+td .action-form:last-child {
+    margin-bottom: 0;
+}
+
+.action-form select,
+.action-form button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #6c5ce7;
+    background-color: #2d3436;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-form button {
+    background-color: #6c5ce7; /* Default button color */
+}
+
+.action-form button:hover {
+    background-color: #a29bfe;
+}
+
+/* Specific button styles for actions */
+.action-form .delete-button-trigger {
+    background-color: #fd79a8; /* Red for deletion trigger */
+    border-color: #fd79a8;
+}
+
+.action-form .delete-button-trigger:hover {
+    background-color: #ff98b9;
+}
+
+.action-form .change-role-button-trigger {
+    background-color: #a29bfe; /* A distinct color for role change */
+    border-color: #a29bfe;
+}
+
+.action-form .change-role-button-trigger:hover {
+    background-color: #c4beff;
+}
+
+/* Message Styles (for success/error banners) */
+.message {
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    /* Initial animation for appearing */
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.message.fade-out {
+    /* This animation will run after the initial fadeIn with a delay */
+    animation: fadeOut 0.5s ease-out 4.5s forwards; /* (5s total - 0.5s fadeOut duration) */
+}
+
+.success-message {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.error-message {
+    background-color: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+}
+
+/* Keyframe animations for messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Confirmation Box Styles (for delete/role change confirmations) */
+.confirmation-box {
+    background-color: #2c3135;
+    border: 2px solid; /* Border color set dynamically by delete-confirm/change-role-confirm */
+    border-radius: 15px;
+    padding: 30px;
+    margin: 40px auto;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.4s ease-out;
+}
+
+.confirmation-box.delete-confirm {
+    border-color: #fd79a8;
+}
+
+.confirmation-box.change-role-confirm {
+    border-color: #a29bfe;
+}
+
+.confirmation-box h2 {
+    color: inherit; /* Inherit color from parent for dynamic coloring */
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.confirmation-box.delete-confirm h2 {
+    color: #fd79a8;
+}
+
+.confirmation-box.change-role-confirm h2 {
+    color: #a29bfe;
+}
+
+.confirmation-box p {
+    font-size: 1.1rem;
+    color: #b2bec3;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.confirmation-actions .btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 30px;
+    text-decoration: none; /* For the 'No, Cancel' link */
+}
+
+.confirmation-actions .btn-confirm {
+    background-color: #fd79a8; /* Specific for confirmation action */
+    color: white;
+    border: none;
+}
+
+.confirmation-actions .btn-confirm:hover {
+    background-color: #ff98b9;
+}
+
+.confirmation-actions .btn-cancel {
+    background-color: transparent;
+    color: #a29bfe;
+    border: 2px solid #a29bfe;
+}
+
+.confirmation-actions .btn-cancel:hover {
+    background-color: rgba(162, 155, 254, 0.1);
+}
+
+/* Generic primary/secondary button styles used in confirmation forms */
+.btn-primary {
+    background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+    color: white;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #a29bfe;
+    border: 2px solid #6c5ce7;
+}
+
+/* Keyframe animation for confirmation boxes */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Styles for Add/Edit Forms (used in manage_artists.php and similar) */
+.form-section {
+    background-color: #2c3135;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #4a4d52;
+}
+
+.form-section h2 {
+    color: #a29bfe;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.add-edit-form .form-group {
+    margin-bottom: 15px;
+}
+
+.add-edit-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #b2bec3;
+    font-weight: bold;
+}
+
+.add-edit-form input[type="text"],
+.add-edit-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #6c5ce7;
+    background-color: #1e2124;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.add-edit-form input[type="text"]:focus,
+.add-edit-form select:focus {
+    outline: none;
+    border-color: #a29bfe;
+    box-shadow: 0 0 0 2px rgba(162, 155, 254, 0.3);
+}
+
+.add-edit-form .btn {
+    margin-top: 15px;
+    width: auto; /* Allow buttons to size based on content */
+    display: inline-block; /* Keep buttons inline */
+    margin-right: 10px; /* Space between buttons */
+}
+
+/* Horizontal rule style for separators */
+hr {
+    border: none;
+    border-top: 1px solid #4a4d52;
+    margin: 40px 0;
+}
+
+:root {
+    --primary-color: #6c5ce7; /* Purple */
+    --secondary-color: #a29bfe; /* Lighter Purple */
+    --accent-color: #fd79a8; /* Pink */
+    --dark-bg: #2d3436; /* Dark Grey */
+    --darker-bg: #1e2124; /* Even Darker Grey */
+    --text-white: #ffffff;
+    --text-gray: #b2bec3;
+    --card-bg: #36393f; /* Card Background */
+    --hover-bg: #40434a; /* Hover Background */
+    --error-red: #ff6b6b;
+    --success-green: #2ecc71;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically on this page */
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: var(--card-bg);
+    padding: 50px 40px; /* More padding */
+    border-radius: 15px; /* Softer corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+h1 {
+    font-size: 3.2rem; /* Even larger, more impactful title */
+    text-align: center;
+    margin-bottom: 25px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* Purple gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
+
+p {
+    color: var(--text-gray);
+    margin-bottom: 40px; /* More space below intro text */
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+.nav-links {
+    margin-top: 30px;
+    margin-bottom: 50px; /* Increased space below links */
+    display: grid; /* Use CSS Grid for better layout control */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid columns */
+    gap: 25px; /* More space between grid items */
+    justify-content: center; /* Center grid items horizontally */
+}
+
+.nav-links a {
+    display: flex; /* Use flex for content inside each link card */
+    flex-direction: column; /* Stack icon and text */
+    align-items: center;
+    background-color: var(--darker-bg);
+    color: var(--text-white);
+    padding: 30px 20px; /* More padding for card feel */
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(108, 92, 231, 0.2); /* Subtle border */
+}
+
+.nav-links a:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-8px); /* Lift significantly on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+    border-color: var(--primary-color); /* Highlight border on hover */
+}
+
+.nav-links a::before {
+    /* Icon placeholder - You can replace these with actual icon fonts (e.g., FontAwesome) */
+    font-size: 2.5rem; /* Larger icon size */
+    margin-bottom: 15px;
+    color: var(--accent-color); /* Pink color for icons */
+    display: block;
+}
+
+.nav-links a[href*="users"]::before { content: '👥'; } /* Users icon */
+.nav-links a[href*="artists"]::before { content: '🎤'; } /* Artists icon */
+.nav-links a[href*="songs"]::before { content: '🎶'; } /* Songs/Albums icon */
+.nav-links a[href*="analytics"]::before { content: '📊'; } /* Analytics icon */
+/* For the placeholder link, assign a default or specific icon */
+.nav-links a[href="#"]::before { content: '⚙️'; } /* Generic settings/gear icon */
+
+.logout-container { /* New container for logout button for centering */
+    text-align: center;
+    margin-top: 40px;
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, var(--accent-color), #ffafbe); /* Pink gradient */
+    color: var(--text-white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px; /* More rounded */
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+    text-decoration: none; /* Ensure it looks like a button even if it's an anchor */
+    display: inline-block;
+}
+
+.logout-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+    opacity: 0.9;
+}
+
+/* --- Custom Confirmation Modal Styles --- */
+.custom-modal {
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Blurred background */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center;
+    align-items: center;
+
+    /* Start hidden and transition visibility */
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transition both */
+}
+
+.custom-modal.show {
+    visibility: visible; /* Show when 'show' class is added */
+    opacity: 1; /* Fade in */
+}
+
+.custom-modal-content {
+    background-color: var(--card-bg);
+    margin: auto; /* For centering */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(-50px); /* Start slightly above for animation */
+    opacity: 0; /* Start hidden for animation */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    position: relative; /* For the close button */
+}
+
+.custom-modal.show .custom-modal-content {
+    transform: translateY(0); /* Slide down into place */
+    opacity: 1; /* Fade in */
+}
+
+.custom-modal-content h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.custom-modal-content p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+}
+
+.modal-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none; /* For the anchor tag if used */
+    display: inline-block; /* For consistent sizing */
+    text-align: center;
+}
+
+.modal-btn.confirm {
+    background: linear-gradient(45deg, var(--accent-color), #ffafbe); /* Pink gradient for confirm */
+    color: var(--text-white);
+    box-shadow: 0 4px 10px rgba(253, 121, 168, 0.4);
+}
+
+.modal-btn.confirm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(253, 121, 168, 0.6);
+}
+
+.modal-btn.cancel {
+    background-color: var(--darker-bg);
+    color: var(--text-gray);
+    border: 2px solid var(--primary-color);
+}
+
+.modal-btn.cancel:hover {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+}
+/* End Custom Confirmation Modal Styles */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 25px;
+    }
+    h1 {
+        font-size: 2.5rem;
+    }
+    p {
+        font-size: 1.05rem;
+    }
+    .nav-links {
+        grid-template-columns: 1fr; /* Stack links vertically on smaller screens */
+        gap: 18px;
+    }
+    .nav-links a {
+        padding: 25px 20px;
+        font-size: 1rem;
+    }
+    .nav-links a::before {
+        font-size: 2rem;
+    }
+    .logout-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    .modal-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .modal-btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 15px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 0.95rem;
+    }
+    .nav-links a {
+        padding: 20px 15px;
+    }
+    .nav-links a::before {
+        font-size: 1.8rem;
+    }
+}

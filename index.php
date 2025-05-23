@@ -3,7 +3,6 @@ include 'db_connect.php';
 include 'log_page_view.php';
 session_start();
 
-// --- Your existing PHP functions to fetch data ---
 function getTrendingSongs($conn) {
     $songs = [];
     $sql = "SELECT s.SongID, s.SongName, a.ArtistName, al.ReleaseYear
@@ -53,7 +52,6 @@ function getPopularAlbums($conn) {
     return $albums;
 }
 
-// Function to get playlists for a logged-in user from the database
 function getUserPlaylists($conn, $userID) {
     $playlists = [];
     $stmt = $conn->prepare("SELECT PlaylistID, PlaylistName FROM Playlists WHERE UserID = ? ORDER BY CreatedAt DESC");
@@ -69,26 +67,23 @@ function getUserPlaylists($conn, $userID) {
     return $playlists;
 }
 
-// Fetch data
 $trendingSongs = getTrendingSongs($conn);
 $popularArtists = getPopularArtists($conn);
 $popularAlbums = getPopularAlbums($conn);
 
-// Fetch playlists if user is logged in as a listener
 $userPlaylists = [];
-$listenerPlaylistsForModal = []; // For the 'add song to playlist' modal
-if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3) { // RoleID 3 is for Listener
+$listenerPlaylistsForModal = [];
+if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3) {
     $userPlaylists = getUserPlaylists($conn, $_SESSION['userID']);
-    $listenerPlaylistsForModal = $userPlaylists; // Same data for now, could be filtered later
+    $listenerPlaylistsForModal = $userPlaylists;
 }
 
-$conn->close(); // Close the database connection
+$conn->close();
 
-// Determine which modal to display based on session variable
 $displayLoginModal = false;
 $displaySignupModal = false;
 $displayCreatePlaylistModal = false;
-$displayAddSongToPlaylistModal = false; // NEW: For add song to playlist modal
+$displayAddSongToPlaylistModal = false;
 
 if (isset($_SESSION['modal_to_open'])) {
     if ($_SESSION['modal_to_open'] === 'login') {
@@ -97,7 +92,7 @@ if (isset($_SESSION['modal_to_open'])) {
         $displaySignupModal = true;
     } elseif ($_SESSION['modal_to_open'] === 'createPlaylist') {
         $displayCreatePlaylistModal = true;
-    } elseif ($_SESSION['modal_to_open'] === 'addSongToPlaylist') { // If we want to re-open this modal on error
+    } elseif ($_SESSION['modal_to_open'] === 'addSongToPlaylist') {
         $displayAddSongToPlaylistModal = true;
     }
     unset($_SESSION['modal_to_open']);
@@ -110,7 +105,7 @@ if (isset($_SESSION['modal_to_open'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundWave - Music Portal</title>
+    <title>Walkman - Music Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -122,19 +117,19 @@ if (isset($_SESSION['modal_to_open'])) {
                 <input type="text" class="search-bar" placeholder="Search for songs, artists, albums..." id="searchInput">
             </div>
             
-            <?php if (isset($_SESSION['userID'])): // User is logged in ?>
+            <?php if (isset($_SESSION['userID'])): ?>
                 <div class="user-nav">
                     <span class="welcome-message">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-                    <?php if ($_SESSION['roleID'] == 3): // If listener ?>
+                    <?php if ($_SESSION['roleID'] == 3): ?>
                         <a href="#my-playlists" class="btn btn-secondary">My Playlists</a>
                         <a href="listener/my_profile.php" class="btn btn-primary">My Profile</a>
-                    <?php elseif ($_SESSION['roleID'] == 1): // If admin ?>
+                    <?php elseif ($_SESSION['roleID'] == 1): ?>
                         <a href="admin/dashboard.php" class="btn btn-primary">Admin Dashboard</a>
-                    <?php elseif ($_SESSION['roleID'] == 2): // If creator (formerly artist) ?>
+                    <?php elseif ($_SESSION['roleID'] == 2): ?>
                         <a href="creator/dashboard.php" class="btn btn-primary">Creator Dashboard</a>
                     <?php endif; ?>
                 </div>
-            <?php else: // User is NOT logged in ?>
+            <?php else: ?>
                 <div class="auth-buttons">
                     <button type="button" class="btn btn-secondary" onclick="showModal('loginModal')">Login</button>
                     <button type="button" class="btn btn-primary" onclick="showModal('signupModal')">Sign Up</button>
@@ -150,18 +145,16 @@ if (isset($_SESSION['modal_to_open'])) {
             <a href="#trending" class="btn btn-primary">Explore Now</a>
         </section>
 
-        <?php if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3): // Show playlists only for logged-in listeners ?>
+        <?php if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3): ?>
             <section class="section" id="my-playlists">
                 <h2 class="section-title">🎶 My Playlists</h2>
                 <?php
-                // Display playlist creation success/error messages
                 if (isset($_SESSION['playlist_message'])) {
                     $messageClass = ($_SESSION['playlist_message_type'] == 'success') ? 'success-message' : 'error-message';
                     echo '<div class="message ' . $messageClass . '">' . htmlspecialchars($_SESSION['playlist_message']) . '</div>';
                     unset($_SESSION['playlist_message']);
                     unset($_SESSION['playlist_message_type']);
                 }
-                // Display song addition success/error messages
                 if (isset($_SESSION['song_action_message'])) {
                     $messageClass = ($_SESSION['song_action_message_type'] == 'success') ? 'success-message' : 'error-message';
                     echo '<div class="message ' . $messageClass . '">' . htmlspecialchars($_SESSION['song_action_message']) . '</div>';
@@ -192,7 +185,7 @@ if (isset($_SESSION['modal_to_open'])) {
                         <div class="card-image">🎵</div>
                         <div class="card-title"><?php echo htmlspecialchars($song['SongName']); ?></div>
                         <div class="card-subtitle"><?php echo htmlspecialchars($song['ArtistName']); ?> • <?php echo htmlspecialchars($song['ReleaseYear']); ?></div>
-                        <?php if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3): // Show add button only for logged-in listeners ?>
+                        <?php if (isset($_SESSION['userID']) && $_SESSION['roleID'] == 3): ?>
                             <button class="add-to-playlist-btn" onclick="openAddSongModal(<?php echo $song['SongID']; ?>, '<?php echo addslashes($song['SongName']); ?>')">+</button>
                         <?php endif; ?>
                     </div>
@@ -204,7 +197,7 @@ if (isset($_SESSION['modal_to_open'])) {
             <h2 class="section-title">⭐ Popular Artists</h2>
             <div class="cards-grid" id="popularArtists">
                 <?php foreach ($popularArtists as $artist): ?>
-                    <a href="artist_profile.php?artist_id=<?php echo htmlspecialchars($artist['ArtistID']); ?>" class="card clickable artist-card"> <div class="card-image">🎤</div>
+                    <a href="home/artist_profile.php?artist_id=<?php echo htmlspecialchars($artist['ArtistID']); ?>" class="card clickable artist-card"> <div class="card-image">🎤</div>
                         <div class="card-title"><?php echo htmlspecialchars($artist['ArtistName']); ?></div>
                         <div class="card-subtitle"><?php echo htmlspecialchars($artist['CompanyName'] ?: 'Independent'); ?></div>
                     </a>
@@ -290,7 +283,7 @@ if (isset($_SESSION['modal_to_open'])) {
         <div class="modal-content">
             <span class="close" onclick="hideModal('createPlaylistModal')">&times;</span>
             <h2 class="form-title">Create New Playlist</h2>
-            <form action="create_playlist.php" method="POST">
+            <form action="home/create_playlist.php" method="POST">
                 <div class="form-group">
                     <label for="playlistName">Playlist Name</label>
                     <input type="text" id="playlistName" name="playlist_name" required>
@@ -329,39 +322,33 @@ if (isset($_SESSION['modal_to_open'])) {
     </div>
 
     <script>
-        let currentSongID = null; // To store the song ID when the modal opens
+        let currentSongID = null;
 
-        // Function to show a modal
         function showModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
 
-        // Function to hide a modal
         function hideModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Close modal when clicking outside of it
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
         }
 
-        // Function to open the "Add Song to Playlist" modal
         function openAddSongModal(songID, songName) {
-            currentSongID = songID; // Store the song ID
-            document.getElementById('addSongModalSongID').value = songID; // Set hidden input value
-            document.getElementById('songTitleForModal').textContent = songName; // Set song title in modal
+            currentSongID = songID;
+            document.getElementById('addSongModalSongID').value = songID;
+            document.getElementById('songTitleForModal').textContent = songName;
 
-            // Reset radio button selection if any
             const radioButtons = document.querySelectorAll('#playlistSelectionRadios input[type="radio"]');
             radioButtons.forEach(radio => radio.checked = false);
 
             showModal('addSongToPlaylistModal');
         }
 
-        // PHP-driven modal display (for redirects from login/signup/create playlist)
         <?php if ($displayLoginModal): ?>
             showModal('loginModal');
         <?php elseif ($displaySignupModal): ?>

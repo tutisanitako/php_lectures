@@ -1,33 +1,27 @@
 <?php
 session_start();
 
-// Check if user is logged in and is an Admin (RoleID = 1)
 if (!isset($_SESSION['userID']) || $_SESSION['roleID'] != 1) {
     header("Location: ../index.php?error=access_denied");
     exit();
 }
 
-include '../db_connect.php'; // Connect to the database
+include '../db_connect.php';
 
 $message = '';
-$message_type = ''; // 'success' or 'error'
+$message_type = '';
 
-// Variables for pending confirmations
 $confirm_delete_artist_id = null;
 $confirm_delete_artist_name = null;
 
-// Variables for edit form pre-population
 $edit_artist_id = null;
 $edit_artist_name = '';
-$edit_company_id = ''; // Stores the CompanyID for the artist being edited
+$edit_company_id = '';
 
-// --- Handle incoming GET requests for confirmation or editing ---
 
-// 1. Handle delete confirmation request
 if (isset($_GET['confirm_delete_id'])) {
     $temp_artist_id = filter_var($_GET['confirm_delete_id'], FILTER_SANITIZE_NUMBER_INT);
 
-    // Fetch artist name for confirmation message
     $stmt_fetch_artist = $conn->prepare("SELECT ArtistName FROM Artists WHERE ArtistID = ? LIMIT 1");
     $stmt_fetch_artist->bind_param("i", $temp_artist_id);
     $stmt_fetch_artist->execute();
@@ -40,14 +34,13 @@ if (isset($_GET['confirm_delete_id'])) {
     } else {
         $_SESSION['admin_message'] = "Artist not found for deletion confirmation.";
         $_SESSION['admin_message_type'] = "error";
-        $_SESSION['admin_message_time'] = time(); // Store timestamp
-        header("Location: manage_artists.php"); // Redirect to self to clear URL
+        $_SESSION['admin_message_time'] = time();
+        header("Location: manage_artists.php");
         exit();
     }
     $stmt_fetch_artist->close();
 }
 
-// 2. Handle edit request (when an "Edit" button is clicked)
 if (isset($_GET['edit_id'])) {
     $temp_artist_id = filter_var($_GET['edit_id'], FILTER_SANITIZE_NUMBER_INT);
 
@@ -58,27 +51,26 @@ if (isset($_GET['edit_id'])) {
     if ($stmt_fetch_artist_details->num_rows > 0) {
         $stmt_fetch_artist_details->bind_result($artist_name, $company_id);
         $stmt_fetch_artist_details->fetch();
-        $edit_artist_id = $temp_artist_id; // Set ID to indicate we are in edit mode
+        $edit_artist_id = $temp_artist_id; 
         $edit_artist_name = $artist_name;
         $edit_company_id = $company_id;
     } else {
         $_SESSION['admin_message'] = "Artist not found for editing.";
         $_SESSION['admin_message_type'] = "error";
-        $_SESSION['admin_message_time'] = time(); // Store timestamp
-        header("Location: manage_artists.php"); // Redirect to self to clear URL
+        $_SESSION['admin_message_time'] = time();
+        header("Location: manage_artists.php");
         exit();
     }
     $stmt_fetch_artist_details->close();
 }
 
 
-// --- Handle Form Submissions (Add, Update, Delete) ---
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Clear any previous session messages before processing new POST actions
     if (isset($_SESSION['admin_message'])) {
         unset($_SESSION['admin_message']);
         unset($_SESSION['admin_message_type']);
-        unset($_SESSION['admin_message_time']); // Clear timestamp too
+        unset($_SESSION['admin_message_time']);
     }
 
     if (isset($_POST['action'])) {
@@ -88,13 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $artistName = filter_var($_POST['artist_name'], FILTER_SANITIZE_STRING);
             $companyID = filter_var($_POST['company_id'], FILTER_SANITIZE_NUMBER_INT);
 
-            // Handle empty company ID, set to NULL in DB if allowed
             $companyID_for_db = !empty($companyID) ? $companyID : null;
 
             $stmt = $conn->prepare("INSERT INTO Artists (ArtistName, CompanyID) VALUES (?, ?)");
-            // Use 'si' for string, integer. For NULL, it typically works with INT, but be mindful of DB schema (NULL allowed?).
-            // If CompanyID column is NOT NULL, you'd need to handle this differently (e.g., set to a default company).
-            // For now, assuming CompanyID can be NULL.
+
             $stmt->bind_param("si", $artistName, $companyID_for_db);
             if ($stmt->execute()) {
                 $_SESSION['admin_message'] = "Artist '{$artistName}' added successfully!";
@@ -115,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $companyID_for_db = !empty($companyID) ? $companyID : null;
 
             $stmt = $conn->prepare("UPDATE Artists SET ArtistName = ?, CompanyID = ? WHERE ArtistID = ?");
-            $stmt->bind_param("sii", $artistName, $companyID_for_db, $artistID); // s for string, i for int
+            $stmt->bind_param("sii", $artistName, $companyID_for_db, $artistID);
             if ($stmt->execute()) {
                 $_SESSION['admin_message'] = "Artist '{$artistName}' updated successfully!";
                 $_SESSION['admin_message_type'] = "success";
@@ -130,13 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ($action == 'delete_artist' && isset($_POST['artist_id'])) {
             $artistID = filter_var($_POST['artist_id'], FILTER_SANITIZE_NUMBER_INT);
 
-            // IMPORTANT: In a real application, consider foreign key constraints.
-            // If albums/songs are linked to artists, you might need to:
-            // 1. Delete associated albums/songs first (cascading delete).
-            // 2. Set the artist_id to NULL in related tables if allowed (nullify).
-            // 3. Mark the artist as "inactive" or "deleted" instead of truly removing the row.
-            // For this example, we're doing a direct delete, which will fail if there are
-            // foreign key constraints preventing deletion.
             $stmt = $conn->prepare("DELETE FROM Artists WHERE ArtistID = ?");
             $stmt->bind_param("i", $artistID);
             if ($stmt->execute()) {
@@ -144,7 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['admin_message_type'] = "success";
                 $_SESSION['admin_message_time'] = time();
             } else {
-                // This might be an error due to foreign key constraints if you didn't handle them
                 $_SESSION['admin_message'] = "Error deleting artist: " . $stmt->error . " (Perhaps albums/songs are still linked?)";
                 $_SESSION['admin_message_type'] = "error";
                 $_SESSION['admin_message_time'] = time();
@@ -152,21 +133,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
     }
-    // Redirect to self to display message and clear POST data
     header("Location: manage_artists.php");
     exit();
 }
 
-// Check for and display session messages from previous actions
 $display_message_html = false;
-$seconds_to_show = 5; // The duration to show the message in seconds
+$seconds_to_show = 5;
 
 if (isset($_SESSION['admin_message']) && isset($_SESSION['admin_message_time'])) {
     $message = $_SESSION['admin_message'];
     $message_type = $_SESSION['admin_message_type'];
     $message_timestamp = $_SESSION['admin_message_time'];
 
-    // If enough time has passed, don't display the message and clear it
     if ((time() - $message_timestamp) >= $seconds_to_show) {
         unset($_SESSION['admin_message']);
         unset($_SESSION['admin_message_type']);
@@ -177,10 +155,8 @@ if (isset($_SESSION['admin_message']) && isset($_SESSION['admin_message_time']))
 }
 
 
-// --- Fetch Data for Display ---
-// Fetch all artists and their companies
+
 $artists = [];
-// Using LEFT JOIN to also show artists who might not be assigned to a company yet
 $sql_artists = "SELECT ar.ArtistID, ar.ArtistName, ar.CompanyID, c.CompanyName
                 FROM Artists ar
                 LEFT JOIN Company c ON ar.CompanyID = c.CompanyID
@@ -192,7 +168,6 @@ if ($result_artists && $result_artists->num_rows > 0) {
     }
 }
 
-// Fetch all companies for dropdowns in the add/edit form
 $companies = [];
 $sql_companies = "SELECT CompanyID, CompanyName FROM Company ORDER BY CompanyName ASC";
 $result_companies = $conn->query($sql_companies);
@@ -202,7 +177,7 @@ if ($result_companies && $result_companies->num_rows > 0) {
     }
 }
 
-$conn->close(); // Close the database connection
+$conn->close(); 
 ?>
 
 <!DOCTYPE html>
@@ -220,13 +195,13 @@ $conn->close(); // Close the database connection
         <a href="dashboard.php" class="back-link">&larr; Back to Dashboard</a>
         <h1>Manage Artists</h1>
 
-        <?php if ($display_message_html): // Only display if message is not timed out ?>
+        <?php if ($display_message_html): ?>
             <div class="message <?php echo $message_type; ?>-message fade-out">
                 <?php echo htmlspecialchars($message); ?>
             </div>
         <?php endif; ?>
 
-        <?php if ($confirm_delete_artist_id !== null): // Show delete confirmation box ?>
+        <?php if ($confirm_delete_artist_id !== null):?>
             <div class="confirmation-box delete-confirm">
                 <h2>Confirm Deletion</h2>
                 <p>Are you absolutely sure you want to delete the artist <strong><?php echo htmlspecialchars($confirm_delete_artist_name); ?></strong> (ID: <?php echo htmlspecialchars($confirm_delete_artist_id); ?>)? This action cannot be undone and may affect associated albums and songs.</p>
@@ -239,7 +214,7 @@ $conn->close(); // Close the database connection
                     <a href="manage_artists.php" class="btn btn-cancel">No, Cancel</a>
                 </div>
             </div>
-        <?php else: // Show artist table and add/edit form (default view) ?>
+        <?php else:?>
 
             <div class="form-section">
                 <h2><?php echo ($edit_artist_id !== null) ? 'Edit Artist' : 'Add New Artist'; ?></h2>

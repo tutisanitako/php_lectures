@@ -1,0 +1,633 @@
+/* Your existing CSS goes here */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --accent-color: #fd79a8;
+    --dark-bg: #2d3436;
+    --darker-bg: #1e2124;
+    --text-white: #ffffff;
+    --text-gray: #b2bec3;
+    --card-bg: #36393f;
+    --hover-bg: #40434a;
+    --error-red: #ff6b6b;
+    --success-green: #2ecc71;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    color: var(--text-white);
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: rgba(45, 52, 54, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-container {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 2rem;
+    position: relative;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 25px;
+    background: var(--card-bg);
+    color: var(--text-white);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-bar:focus {
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.auth-buttons, .user-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-white);
+    border: 2px solid var(--primary-color);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+.welcome-message {
+    color: var(--text-white);
+    font-size: 1rem;
+    margin-right: 15px;
+    white-space: nowrap;
+}
+.user-nav .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+}
+
+
+/* Main Content */
+.main-content {
+    margin-top: 100px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 4rem 0;
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(253, 121, 168, 0.1) 100%);
+    border-radius: 20px;
+    margin-bottom: 3rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    position: relative; /* For add button positioning */
+}
+/* Specific hover for clickable cards */
+.card.clickable:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+    border-color: var(--primary-color);
+    cursor: pointer;
+}
+
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+}
+
+.card-subtitle {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    overflow-y: auto; /* Allow scrolling for modal content */
+}
+
+.modal-content {
+    background: var(--card-bg);
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-gray);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    border-radius: 10px;
+    background: var(--darker-bg);
+    color: var(--text-white);
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+.form-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--text-white);
+}
+
+/* Message Styles */
+.message {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.error-message {
+    background-color: rgba(255, 107, 107, 0.2);
+    color: var(--error-red);
+    border: 1px solid var(--error-red);
+}
+.success-message {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
+}
+
+/* Playlist specific styles */
+.playlist-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(253, 121, 168, 0.2); /* Accent border for playlists */
+    cursor: pointer; /* Playlists are always clickable */
+}
+
+.playlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(253, 121, 168, 0.3); /* Accent shadow */
+    border-color: var(--accent-color);
+}
+
+.playlist-card .card-image {
+    background: linear-gradient(45deg, var(--accent-color), #ffafbe); /* Different gradient for playlists */
+}
+.playlist-add-card {
+    background: var(--darker-bg);
+    border: 2px dashed var(--text-gray);
+    color: var(--text-gray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%; /* Ensure it matches other cards */
+    min-height: 200px; /* Adjust if needed to fit grid */
+    cursor: pointer;
+}
+
+.playlist-add-card:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+    transform: translateY(-5px); /* Add transform on hover for consistency */
+}
+.playlist-add-card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+.playlist-add-card .text {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* NEW: Add to Playlist button on song cards */
+.add-to-playlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    line-height: 1; /* Adjust for better vertical alignment of plus sign */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.add-to-playlist-btn:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Styles for the playlist list in the 'Add Song' modal */
+.playlist-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    max-height: 300px; /* Limit height for scrollability */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.playlist-option {
+    background: var(--darker-bg);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s ease;
+}
+
+.playlist-option:hover {
+    background: var(--hover-bg);
+    cursor: pointer;
+}
+
+.playlist-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+.playlist-option label {
+    flex-grow: 1;
+    cursor: pointer;
+    margin: 0; /* Override default label margin */
+}
+.playlist-option .add-btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8em;
+    border-radius: 20px;
+}
+.no-playlists-message {
+    text-align: center;
+    color: var(--text-gray);
+    margin-top: 1.5rem;
+}
+
+/* Add these styles to your existing style.css */
+
+/* Specific hover for clickable cards - already exists, but ensure it applies to 'a.card' */
+a.card.clickable:hover { /* Target anchor tags that are cards and clickable */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+    border-color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* Base style for artist cards (optional, for specific artist card aesthetics) */
+.artist-card {
+    border: 1px solid rgba(108, 92, 231, 0.2); /* Default subtle border for artist cards */
+    text-decoration: none; /* Remove underline from anchor tags */
+    color: inherit; /* Inherit text color from parent */
+}
+
+.artist-card .card-image {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* Consistent gradient for artist cards */
+}
+
+/* Add this to your style.css */
+
+.logo-link {
+    text-decoration: none; /* Removes the underline from the link */
+    color: inherit; /* Ensures the link inherits text color if needed, though logo uses gradient */
+    display: inline-block; /* Makes the link wrap around the div correctly */
+}
+
+/* Optional: Add a subtle hover effect if you want */
+.logo-link:hover .logo {
+    opacity: 0.8; /* Dim slightly on hover */
+    transform: scale(1.02); /* Slightly grow on hover */
+    transition: all 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .search-container {
+        order: 3;
+        flex-basis: 100%;
+        margin: 0;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .welcome-message {
+        margin-right: 0;
+        margin-bottom: 10px;
+        flex-basis: 100%;
+        text-align: center;
+    }
+    .auth-buttons, .user-nav {
+        width: 100%;
+        justify-content: center;
+    }
+    .add-to-playlist-btn {
+        position: static; /* Stack on smaller screens */
+        margin-top: 10px;
+        width: auto;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 1rem;
+    }
+}
+
+.artist-header {
+    background-color: var(--card-bg);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.artist-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.artist-header p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.artist-meta {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+}
+.artist-meta strong {
+    color: var(--text-white);
+}
+
+.cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.card {
+    padding: 1.2rem;
+    text-align: center;
+}
+.card-image {
+    height: 120px;
+    font-size: 1.8rem;
+}
+.card-title {
+    font-size: 1.1rem;
+}
+.card-subtitle {
+    font-size: 0.85rem;
+}
+
+.song-card .card-image {
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+}
+
+.album-card .card-image {
+    background: linear-gradient(45deg, #8e44ad, #9b59b6);
+}
+
+.section-title {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: var(--text-white);
+}
+.section-title span {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.no-content-message {
+    text-align: center;
+    color: var(--text-gray);
+    font-style: italic;
+    padding: 2rem;
+    background-color: var(--darker-bg);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .artist-header {
+        padding: 3rem 1.5rem;
+    }
+    .artist-header h1 {
+        font-size: 2.8rem;
+    }
+    .artist-header p {
+        font-size: 1rem;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .artist-header {
+        padding: 2rem 1rem;
+    }
+    .artist-header h1 {
+        font-size: 2.2rem;
+    }
+    .artist-header p {
+        font-size: 0.9rem;
+    }
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .card {
+        padding: 1rem;
+    }
+    .card-image {
+        height: 100px;
+    }
+}

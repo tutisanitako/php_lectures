@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-// Check if user is logged in and is a Listener (RoleID = 3)
 if (!isset($_SESSION['userID']) || $_SESSION['roleID'] != 3) {
     header("Location: ../index.php?error=access_denied");
     exit();
 }
 
-include '../db_connect.php'; // Connect to the database
-include '../log_page_view.php'; // Log this page view
+include '../db_connect.php';
+include '../log_page_view.php';
 
-// Fetch user details for the profile page
 $userID = $_SESSION['userID'];
 $userDetails = null;
 $stmt_user = $conn->prepare("SELECT UserID, Username, FullName, Email, CreatedAt FROM Users WHERE UserID = ? LIMIT 1");
@@ -23,7 +21,6 @@ if ($result_user && $result_user->num_rows > 0) {
 $stmt_user->close();
 
 
-// Function to get listening history for the current user
 function getListeningHistory($conn, $userID) {
     $history = [];
     $stmt = $conn->prepare("
@@ -48,10 +45,9 @@ function getListeningHistory($conn, $userID) {
     return $history;
 }
 
-// Fetch data for the listener's profile
 $listeningHistory = getListeningHistory($conn, $userID);
 
-$conn->close(); // Close the database connection
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,25 +114,23 @@ $conn->close(); // Close the database connection
     <script>
         function showLogoutConfirmation() {
             const modal = document.getElementById('logoutConfirmationModal');
-            modal.classList.add('show'); // Add 'show' class to trigger fade-in and slide-down
+            modal.classList.add('show');
         }
 
         function hideLogoutConfirmation() {
             const modal = document.getElementById('logoutConfirmationModal');
-            modal.classList.remove('show'); // Remove 'show' class to trigger fade-out and slide-up
-            // Optional: Add a small delay before setting display: none if you want the animation to complete
+            modal.classList.remove('show');
             setTimeout(() => {
                 modal.style.display = 'none';
-            }, 300); // Matches CSS transition duration
+            }, 300);
         }
 
         function proceedLogout() {
-            window.location.href = "../logout.php"; // Redirect to your logout script
+            window.location.href = "../logout.php";
         }
 
-        // Close modal if user clicks outside of the content (but within the modal overlay)
         document.getElementById('logoutConfirmationModal').addEventListener('click', function(event) {
-            if (event.target === this) { // If the click was on the modal background itself
+            if (event.target === this) {
                 hideLogoutConfirmation();
             }
         });
